@@ -1,0 +1,25 @@
+name: app2nd
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  device_preview: ^1.1.0
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  never_behind_keyboard: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets: 
+    - assets\img\logo.png
