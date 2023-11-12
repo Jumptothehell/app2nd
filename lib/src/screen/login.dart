@@ -175,8 +175,9 @@ class _LogInScreenState extends State<LogInScreen> {
                             color: Color(0xff54855F)),
                       ),
                     ),
-                    const InkWell(
-                      child: Text(
+                    InkWell(
+                      onTap: () => Navigator.pushNamed(context, '/forget'),
+                      child: const Text(
                         'ลืมรหัสผ่าน ?',
                         style: TextStyle(
                             fontSize: 12,
