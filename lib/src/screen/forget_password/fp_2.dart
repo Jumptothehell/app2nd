@@ -1,3 +1,4 @@
+import 'package:app2nd/src/function.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmReset extends StatefulWidget {
@@ -13,9 +14,10 @@ class _ConfirmResetState extends State<ConfirmReset> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xff1BC28E),
-      ),
+      appBar: topAppBar(""),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xff1BC28E),
+      // ),
       body: Center(
         child: Column(
           children: [

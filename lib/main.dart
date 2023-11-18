@@ -1,3 +1,5 @@
+// import 'package:app2nd/src/screen/bottom_appbar.dart';
+import 'package:app2nd/src/navigation/bottom_appbar.dart';
 import 'package:app2nd/src/screen/forget_password/fp_1.dart';
 import 'package:app2nd/src/screen/forget_password/fp_2.dart';
 import 'package:app2nd/src/screen/forget_password/fp_3.dart';
@@ -10,12 +12,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
-      // const MainApp(),
-      // DevicePreview(
-      //   enabled: true,
-      //   builder: (context) => const MainApp(),
-      // ),
-      const MainApp());
+    // const MainApp(),
+    // DevicePreview(
+    //   enabled: true,
+    //   builder: (context) => const MainApp(),
+    // ),
+    const MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -53,7 +56,8 @@ class MainApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/forget': (context) => const ForgetPass(),
         '/reset': (context) => const ConfirmReset(),
-        '/newpassword': (context) => const NewPassword()
+        '/newpassword': (context) => const NewPassword(),
+        '/bottom': (context) => const BottomBar()
       },
     );
   }

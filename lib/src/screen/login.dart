@@ -191,8 +191,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // print('ยืนยัน');
-                      // Navigator.of(context)
-                      //     .pushNamed('/');
+                      Navigator.of(context).pushNamed('/bottom');
                     }
                   },
                   child: const Text('เข้าสู่ระบบ'),

@@ -1,3 +1,4 @@
+import 'package:app2nd/src/function.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -26,14 +27,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: const Text(
-          'สมัครบัญชีผู้ใช้',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xff1BC28E),
-      ),
+      appBar: topAppBar('สมัครบัญชีผู้ใช้'),
+      // appBar: AppBar(
+      //   title: const Text(
+      //     'สมัครบัญชีผู้ใช้',
+      //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: const Color(0xff1BC28E),
+      // ),
       body: Row(
         children: [
           Container(

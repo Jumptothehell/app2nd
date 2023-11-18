@@ -1,3 +1,4 @@
+import 'package:app2nd/src/function.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPass extends StatefulWidget {
@@ -14,9 +15,10 @@ class _ForgetPassState extends State<ForgetPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xff1BC28E),
-      ),
+      appBar: topAppBar(""),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xff1BC28E),
+      // ),
       body: Center(
         child: Column(
           children: [
