@@ -14,7 +14,7 @@ class _ConfirmResetState extends State<ConfirmReset> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: topAppBar(""),
+      appBar: topAppBar("", true),
       // appBar: AppBar(
       //   backgroundColor: const Color(0xff1BC28E),
       // ),

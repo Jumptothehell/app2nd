@@ -19,7 +19,7 @@ class _NewPasswordState extends State<NewPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: topAppBar(""),
+      appBar: topAppBar("", true),
       // appBar: AppBar(
       //   backgroundColor: const Color(0xff1BC28E),
       // ),

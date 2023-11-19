@@ -22,4 +22,5 @@ flutter:
   uses-material-design: true
 
   assets: 
-    - assets\img\logo.png
+    - assets/img/logo.png
+    - assets/img/flower.jpg

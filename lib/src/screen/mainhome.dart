@@ -7,77 +7,177 @@ class MainHomePage extends StatefulWidget {
   State<MainHomePage> createState() => _MainHomePageState();
 }
 
-Widget buildProject(int index) => Container(
-      width: 200,
-      height: 250,
-      decoration: const BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
+Widget buildProject(int index) => Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        right: 20,
       ),
-      child: Center(
-        child: Text('$index'),
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            width: 250,
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/project'),
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                elevation: 8,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 160,
+                      child: Image.asset(
+                        'assets/img/logo.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                          color: Colors.white,
+                          width: 250,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                const Text("Name"),
+                                Text(
+                                  "สวัสดีครับพี่น้อง",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            width: 30,
+          );
+        },
+        itemCount: index,
       ),
     );
+
+Widget buildNews(int index) {
+  return Padding(
+    padding: const EdgeInsets.all(20),
+    child: SingleChildScrollView(
+      child: ListView.separated(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return SizedBox(
+              height: 200,
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                elevation: 8,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset(
+                        'assets/img/logo.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: 1000,
+                        color: Colors.white,
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "สวัสดีครับพี่น้อง",
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              height: 30,
+            );
+          },
+          itemCount: index),
+    ),
+  );
+}
 
 class _MainHomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(
             children: [
               Container(
                 height: 120,
                 color: const Color.fromARGB(255, 27, 194, 141),
-                child: const Row(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Icon(
                         Icons.account_circle_outlined,
                         size: 80,
                       ),
                     ),
                     Text(
-                      "สวัสดี, ผู้ใช้งาน",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      'สวัสดี, ผู้ใช้งาน',
+                      style: Theme.of(context).textTheme.titleLarge,
                     )
                   ],
                 ),
               ),
-              // SingleChildScrollView(
               SizedBox(
+                height: 280,
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 6,
+                        left: 10,
+                        right: 10,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'โครงการแนะนำ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                            "โครงการแนะนำ",
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          InkWell(
+                          const InkWell(
                             child: Text(
-                              'ดูทั้งหมด',
+                              "ดูทั้งหมด",
                               style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Color.fromARGB(
+                                color: Color.fromARGB(
                                   255,
                                   27,
                                   194,
                                   141,
                                 ),
-                                color: Color.fromARGB(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color.fromARGB(
                                   255,
                                   27,
                                   194,
@@ -89,52 +189,19 @@ class _MainHomePageState extends State<MainHomePage> {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Divider(
-                        color: Colors.black,
-                      ),
+                    const Divider(
+                      color: Colors.grey,
                     ),
-                    SizedBox(
-                      height: 200,
-                      child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.all(12),
-                          itemBuilder: (context, index) {
-                            return buildProject(index);
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              width: 30,
-                            );
-                          },
-                          itemCount: 10),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 210,
-                      child: ListView.separated(
-                          scrollDirection: Axis.vertical,
-                          padding: const EdgeInsets.all(20),
-                          itemBuilder: (context, index) {
-                            return buildProject(index);
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 20,
-                            );
-                          },
-                          itemCount: 10),
+                    Expanded(
+                      child: buildProject(2),
                     ),
                   ],
                 ),
               ),
-              // ),
+              const Divider(
+                color: Colors.grey,
+              ),
+              buildNews(3)
             ],
           ),
         ),

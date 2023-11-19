@@ -50,7 +50,7 @@ class _BottomBarState extends State<BottomBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
-            label: "กำลังดำเนินการ",
+            label: "กำลังดำเนินกา",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
