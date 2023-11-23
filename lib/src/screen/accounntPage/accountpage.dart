@@ -24,8 +24,8 @@ class _AccountScreenState extends State<AccountScreen> {
     {'Title': 'แก้ไขข้อมูลส่วนตัว', 'Path': '/edit'},
     {'Title': 'ติดต่อเรา', 'Path': '/contact_us'},
     {'Title': 'คำถามที่พบบ่อย', 'Path': '/faq'},
-    {'Title': 'ลบบัญชีผู้ใช้', 'Path': '/deleate_account'},
-    {'Title': 'ออกจากระบบ', 'Path': '/logout'},
+    {'Title': 'ลบบัญชีผู้ใช้', 'Path': ''},
+    {'Title': 'ออกจากระบบ', 'Path': ''},
   ];
 
   ListView buildList() {
