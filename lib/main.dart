@@ -1,9 +1,9 @@
 // import 'package:app2nd/src/screen/bottom_appbar.dart';
 import 'package:app2nd/src/navigation/bottom_appbar.dart';
 import 'package:app2nd/src/screen/acceptancefrom.dart';
-import 'package:app2nd/src/screen/accounntPage/contact.dart';
-import 'package:app2nd/src/screen/accounntPage/editprofile.dart';
-import 'package:app2nd/src/screen/accounntPage/faq.dart';
+import 'package:app2nd/src/screen/accountPage/contact.dart';
+import 'package:app2nd/src/screen/accountPage/editprofile.dart';
+import 'package:app2nd/src/screen/accountPage/faq.dart';
 import 'package:app2nd/src/screen/forget_password/fp_1.dart';
 import 'package:app2nd/src/screen/forget_password/fp_2.dart';
 import 'package:app2nd/src/screen/forget_password/fp_3.dart';
@@ -11,7 +11,6 @@ import 'package:app2nd/src/screen/login.dart';
 import 'package:app2nd/src/screen/projectdetail.dart';
 import 'package:app2nd/src/screen/register.dart';
 // import 'package:device_preview/device_preview.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

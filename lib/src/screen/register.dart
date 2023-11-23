@@ -306,11 +306,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: confirmPassCtrl,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'กรุณายืนยันรหัสผ่าน';
-                      } else if (passwordCtrl.text != confirmPassCtrl.text) {
+                        return 'กรุณากรอกรหัสผ่านเพื่อยืนยัน';
+                      } else if (value != passwordCtrl.text) {
                         return 'รหัสผ่านไม่ตรงกัน';
                       }
                       return null;
+                      // if (confirmPassCtrl.text.isEmpty ?? true) {
+                      //   return 'กรุณายืนยันรหัสผ่าน';
+                      // } else if (passwordCtrl.text != confirmPassCtrl.text) {
+                      //   return 'รหัสผ่านไม่ตรงกัน';
+                      // }
+                      // return null;
                     },
                     decoration: InputDecoration(
                       hintText: 'ยืนยันรหัสผ่าน',

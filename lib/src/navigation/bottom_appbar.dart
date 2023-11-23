@@ -1,4 +1,4 @@
-import 'package:app2nd/src/screen/accounntPage/accountpage.dart';
+import 'package:app2nd/src/screen/accountPage/accountpage.dart';
 import 'package:app2nd/src/screen/mainhome.dart';
 import 'package:flutter/material.dart';
 
