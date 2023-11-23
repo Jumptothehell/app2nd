@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
+  image_picker: ^1.0.4
   never_behind_keyboard: ^1.0.2
 
 dev_dependencies:

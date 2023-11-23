@@ -1,3 +1,4 @@
+import 'package:app2nd/src/screen/accounntPage/accountpage.dart';
 import 'package:app2nd/src/screen/mainhome.dart';
 import 'package:flutter/material.dart';
 
@@ -22,10 +23,7 @@ class _BottomBarState extends State<BottomBar> {
       'Index 2: ประวัติ',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: บัญชี',
-      style: optionStyle,
-    ),
+    AccountScreen()
   ];
 
   void _onItemTapped(int index) {

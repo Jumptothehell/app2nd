@@ -19,10 +19,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordCtrl = TextEditingController();
   final confirmPassCtrl = TextEditingController();
 
+  final orzCtrl = TextEditingController();
+
   bool? isPasswordMatch;
   bool _isPasswordObscured = true;
   bool _isCFPasswordObscured = true;
 
+  bool validate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +47,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Future openDialog(BuildContext contextEE) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            "กรอกหมายเลขจดทะเบียนหน่วยงาน",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 18),
+          ),
+          content: TextField(
+            controller: orzCtrl,
+            decoration: InputDecoration(
+              errorText: validate ? 'กรุณาใส่หมายเลขจดทะเบียนหน่วยงาน' : null,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(
+                    () {
+                      orzCtrl.text.isEmpty ? validate = true : validate = false;
+                    },
+                  );
+                  if (validate == false) {
+                    Navigator.of(context).pop();
+                    seconOpenDailog(context);
+                  }
+                },
+                child: const Text("ยืนยัน"),
+              ),
+            )
+          ],
+        ),
+      );
+
+  Future seconOpenDailog(BuildContext context) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            "ท่านสามารถสร้างโครงการขอรับบริจาคได้\nเมื่อบัญชีถูกตรวจสอบแล้ว",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 18),
+          ),
+          content: const Text("โดยสามารถติดตามสถานะได้ที่หน้า บัญชี"),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/', (Route<dynamic> route) => false);
+                },
+                child: const Text("ยืนยัน"),
+              ),
+            )
+          ],
+        ),
+      );
+
   Form registerForm() {
     return Form(
       key: _formKey,
@@ -61,6 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     controller: nameCtrl,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'กรุณาใส่ชื่อ';
@@ -84,6 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     controller: phoneCtrl,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'กรุณาใส่เบอร์โทรศัพท์';
@@ -107,6 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     controller: addressCtrl,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'กรุณาใส่ที่อยู่';
@@ -130,6 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     controller: mialCtrl,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'กรุณาใส่อีเมลล์';
@@ -194,6 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     obscureText: _isPasswordObscured,
                     keyboardType: TextInputType.text,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     controller: passwordCtrl,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -275,8 +344,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/', (Route<dynamic> route) => false);
+                        if (_selectedValue == 'หน่วยงาน / บริษัท') {
+                          openDialog(context);
+                        } else {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false);
+                        }
                       }
                     },
                     child: const Text('ยืนยัน'),

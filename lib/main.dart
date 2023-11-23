@@ -1,6 +1,9 @@
 // import 'package:app2nd/src/screen/bottom_appbar.dart';
 import 'package:app2nd/src/navigation/bottom_appbar.dart';
 import 'package:app2nd/src/screen/acceptancefrom.dart';
+import 'package:app2nd/src/screen/accounntPage/contact.dart';
+import 'package:app2nd/src/screen/accounntPage/editprofile.dart';
+import 'package:app2nd/src/screen/accounntPage/faq.dart';
 import 'package:app2nd/src/screen/forget_password/fp_1.dart';
 import 'package:app2nd/src/screen/forget_password/fp_2.dart';
 import 'package:app2nd/src/screen/forget_password/fp_3.dart';
@@ -65,6 +68,9 @@ class MainApp extends StatelessWidget {
         '/reset': (context) => const ConfirmReset(),
         '/newpassword': (context) => const NewPassword(),
         '/main': (context) => const BottomBar(),
+        '/edit': (context) => const EditProfileScreen(),
+        '/contact_us': (context) => const ContactUsScreen(),
+        '/faq': (context) => const FaqScreen(),
         '/project': (context) => const ProjectDetailScreen(),
         '/accept': (context) => const AcceptanceForm(),
       },
