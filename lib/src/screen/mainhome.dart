@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -7,133 +9,49 @@ class MainHomePage extends StatefulWidget {
   State<MainHomePage> createState() => _MainHomePageState();
 }
 
-Widget buildProject(int index) => Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return SizedBox(
-            width: 250,
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/project'),
-              child: const Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
-                elevation: 8,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 160,
-                    )
-                  ],
-                ),
-                // decorationClipBehavior = Clip.antiAliasWithSaveLayer,
-                // shape = const RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.all(
-                //     Radius.circular(20),
-                //   ),
-                // ),
-                // elevation = 8,
-                // child = Column(
-                //   children: [
-                //     SizedBox(
-                //       height: 160,
-                //       child: Image.asset(
-                //         'assets/img/logo.png',
-                //         fit: BoxFit.cover,
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Center(
-                //         child: Container(
-                //           color: Colors.white,
-                //           width: 250,
-                //           child: Padding(
-                //             padding: const EdgeInsets.all(10),
-                //             child: Column(
-                //               children: [
-                //                 const Text("Name"),
-                //                 Text(
-                //                   "สวัสดีครับพี่น้อง",
-                //                   style: Theme.of(context).textTheme.bodySmall,
-                //                 )
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-              ),
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            width: 30,
-          );
-        },
-        itemCount: index,
-      ),
-    );
-
-Widget buildNews(int index) {
-  return Padding(
-    padding: const EdgeInsets.all(20),
-    child: SingleChildScrollView(
-      child: ListView.separated(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 200,
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                elevation: 8,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 150,
-                      child: Image.asset(
-                        'assets/img/logo.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 1000,
-                        color: Colors.white,
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            "สวัสดีครับพี่น้อง",
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 30,
-            );
-          },
-          itemCount: index),
-    ),
-  );
+class Project {
+  int? id;
+  String? projectImg;
+  String? projectName;
+  String? projectDetail;
+  Project({
+    this.id,
+    this.projectImg,
+    this.projectName,
+    this.projectDetail,
+  });
 }
 
 class _MainHomePageState extends State<MainHomePage> {
+  Future<String> fetchData() async {
+    // ในที่นี้ให้กำหนด delay เพื่อจำลองการดึงข้อมูลจากที่อื่น
+    // await Future.delayed(const Duration(seconds: 2));
+    return 'ABCD';
+  }
+
+  Future<String> fetchNewsData() async {
+    // ในที่นี้ให้กำหนด delay เพื่อจำลองการดึงข้อมูลจากที่อื่น
+    // await Future.delayed(const Duration(seconds: 2));
+    return 'BE';
+  }
+
+  Future<List<Project>> showNews() async {
+    final response = await http.get(
+        Uri.parse("URL ของ API หรือแหล่งข้อมูลที่ต้องการ")); //URL ฐานข้อมูล
+    var responseData = json.decode(response.body);
+    List<Project> projects = [];
+    responseData.forEach((index, value) {
+      Project project = Project(
+        id: value["id"],
+        projectImg: value["projectImg"],
+        projectName: value["projectName"],
+        projectDetail: value["projectDetail"],
+      );
+      projects.add(project);
+    });
+    return projects;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,20 +124,149 @@ class _MainHomePageState extends State<MainHomePage> {
                       color: Colors.grey,
                     ),
                     Expanded(
-                      child: buildProject(2),
-                    ),
+                      child: buildProject(),
+                    )
                   ],
                 ),
               ),
               const Divider(
                 color: Colors.grey,
               ),
-              buildNews(3)
+              buildNews()
             ],
           ),
         ),
       ),
     );
+  }
+
+  FutureBuilder<String> buildNews() {
+    return FutureBuilder(
+      future: fetchNewsData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return const Text("ไม่มีข้อมูลที่ได้รับ");
+        } else if (snapshot.hasError) {
+          return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+        } else {
+          return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemCount: snapshot.data.length,
+              itemBuilder: ((context, index) {
+                // print(snapshot.data);
+                // print(snapshot.data.length);
+
+                return Container(
+                  height: 250,
+                  margin: const EdgeInsets.all(10),
+                  child: Card(
+                      clipBehavior: Clip.hardEdge,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      elevation: 8,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              'assets/img/logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            width: 600,
+                            color: Colors.white,
+                            child: const Padding(
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 10, left: 20),
+                                child: Text(
+                                  "วิธีการใช้งาน",
+                                )),
+                          ),
+                        ],
+                      )),
+                );
+              }));
+        }
+      },
+    );
+  }
+
+  FutureBuilder<String> buildProject() {
+    return FutureBuilder(
+        future: fetchData(), //แก้เป็น showData
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Text("ไม่มีข้อมูลที่ได้รับ");
+          } else if (snapshot.hasError) {
+            return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+          } else {
+            // print(snapshot.data);
+            // print(snapshot.data.length);
+            // // return Text('ข้อมูล: ${snapshot.data}');
+            // String data = snapshot
+            //     .data; // "ข้อมูลที่ดึงมาจากแหล่งข้อมูล"
+            // List<String> words =
+            //     data.split(' '); // แยกคำโดยใช้ช่องว่าง
+
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data.length,
+              itemBuilder: ((context, index) => InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/project'),
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      width: 250,
+                      child: Card(
+                        clipBehavior: Clip.hardEdge,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        elevation: 8,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 140,
+                              child: Image.asset(
+                                'assets/img/logo.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Container(
+                                  color: Colors.white,
+                                  width: 300,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        // for (var n in words)
+                                        //   Text(n[index])
+                                        const Text("Name"),
+                                        Text(
+                                          "สวัสดีครับพี่น้อง",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )),
+            );
+          }
+        });
   }
 }
 // import 'package:flutter/material.dart';
@@ -249,19 +296,6 @@ class _MainHomePageState extends State<MainHomePage> {
 //   State<MainHomePage> createState() => _MainHomePageState();
 // }
 
-// class Project {
-//   int? id;
-//   String? projectImg;
-//   String? projectName;
-//   String? projectDatail;
-//   Project({
-//     this.id,
-//     this.projectImg,
-//     this.projectName,
-//     this.projectDatail,
-//   });
-// }
-
 // String? _localhost() {
 //   if (Platform.isAndroid) {
 //     return 'http://10.0.2.2:3000'; //return something but i dont know. In video 18.26
@@ -269,17 +303,17 @@ class _MainHomePageState extends State<MainHomePage> {
 //     return 'http://localhost:3000';
 //   }
 // }
-// // class Item{
-// //   final String? img;
-// //   final String? projectname;
-// //   final String? projectdetail;
+// class Item{
+//   final String? img;
+//   final String? projectname;
+//   final String? projectdetail;
 
-// // Item({
-// //   this.img,
-// //   this.projectname,
-// //   this.projectdetail,
-// // });
-// // }
+// Item({
+//   this.img,
+//   this.projectname,
+//   this.projectdetail,
+// });
+// }
 
 // //  Future<List<Item>> showData() async{
 // //     final response =await http.get(Uri.parse(_localhost()+ "/showData"));
@@ -435,22 +469,22 @@ class _MainHomePageState extends State<MainHomePage> {
 //   Future? serverResponse;
 //   @override
 //   Widget build(BuildContext context) {
-//     Future<List<Project>> showData() async {
-//       final response = await http.get(Uri.parse("${_localhost()}/showData"));
-//       var responseData = json.decode(response.body);
+// Future<List<Project>> showData() async {
+//   final response = await http.get(Uri.parse("${_localhost()}/showData"));
+//   var responseData = json.decode(response.body);
 
-//       List<Project> projects = [];
-//       responseData.forEaach((index, value) {
-//         Project project = Project(
-//           id: value["id"],
-//           projectImg: value["projectImg"],
-//           projectName: value["projectName"],
-//           projectDatail: value["projectDatail"],
-//         );
-//         projects.add(project);
-//       });
-//       return projects;
-//     }
+//   List<Project> projects = [];
+//   responseData.forEaach((index, value) {
+//     Project project = Project(
+//       id: value["id"],
+//       projectImg: value["projectImg"],
+//       projectName: value["projectName"],
+//       projectDatail: value["projectDatail"],
+//     );
+//     projects.add(project);
+//   });
+//   return projects;
+// }
 
 //     setState(() {
 //       //if connect pls remove // out.
