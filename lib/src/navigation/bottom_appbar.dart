@@ -1,4 +1,5 @@
 import 'package:app2nd/src/screen/accountPage/accountpage.dart';
+import 'package:app2nd/src/screen/history.dart';
 import 'package:app2nd/src/screen/mainhome.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,7 @@ class _BottomBarState extends State<BottomBar> {
       'Index 1: กำลังดำเนินการ',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: ประวัติ',
-      style: optionStyle,
-    ),
+    HistoryScreen(),
     AccountScreen()
   ];
 
