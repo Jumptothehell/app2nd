@@ -31,6 +31,20 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // ดึงค่า argument ที่ส่งมาจาก Navigator
+    final int? selectedTabIndex =
+        ModalRoute.of(context)?.settings.arguments as int?;
+    if (selectedTabIndex != null) {
+      setState(() {
+        _selectIndex = selectedTabIndex;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

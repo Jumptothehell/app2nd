@@ -18,6 +18,64 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
   final addressCtrl = TextEditingController();
   final dateCtrl = TextEditingController();
 
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2030),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  Future<dynamic> callDialog(BuildContext context, String text) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 18),
+        ),
+        actions: [
+          Center(
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/main',
+                          (Route<dynamic> route) => false,
+                          arguments: 1, // ส่ง index ที่ 3 ไปยัง _BottomBarState
+                        );
+                      },
+                      child: const Text("ใช่"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("ไม่"),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,16 +90,13 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
     );
   }
 
-  Column formField(String text, String errorText, String hintText,
+  Column formField(String text, String errorText, Icon? icon, String hintText,
       TextInputType inputType, TextEditingController controller) {
     return Column(
       children: [
         Align(
           alignment: Alignment.topLeft,
           child: Text(text),
-        ),
-        const SizedBox(
-          height: 5,
         ),
         TextFormField(
           keyboardType: inputType,
@@ -53,7 +108,10 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
             return null;
           },
           decoration: InputDecoration(
+            suffixIcon: icon,
+            // const Icon(Icons.abc),
             hintText: hintText,
+            hintStyle: Theme.of(context).textTheme.bodyMedium,
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(15.0),
@@ -80,31 +138,67 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
               children: [
-                formField('ชื่อตัวแทนบริจาค', 'กรุณาใส่ชื่อ', 'ชื่อ-นามสกุล',
-                    TextInputType.name, nameCtrl),
-                formField('เบอร์โทรศัพท์', 'กรุณาใส่เบอร์โทรศัพท์',
+                formField('ชื่อตัวแทนบริจาค', 'กรุณาใส่ชื่อ', null,
+                    'ชื่อ-นามสกุล', TextInputType.name, nameCtrl),
+                formField('เบอร์โทรศัพท์', 'กรุณาใส่เบอร์โทรศัพท์', null,
                     'เบอร์โทรศัพท์', TextInputType.phone, phoneCtrl),
                 formField(
                     'สิ่งของที่ต้องการบริจาค',
                     'กรุณาระบุของที่ต้องการบริจาค',
+                    null,
                     'สิ่งของที่ต้องการบริจาค',
                     TextInputType.text,
                     objCtrl),
-                formField('สถานที่ส่งมอบของ', 'กรุณาใส่รูป', 'แนบไฟล์',
-                    TextInputType.text, picCtrl),
+                formField(
+                    'สถานที่ส่งมอบของ',
+                    'กรุณาใส่รูป',
+                    const Icon(Icons.photo_size_select_actual_rounded),
+                    'แนบไฟล์',
+                    TextInputType.text,
+                    picCtrl),
                 formField(
                     'รูปสิ่งของที่ต้องการบริจาค',
                     'กรุณากรอกสถานที่ส่งมอบของ',
+                    const Icon(Icons.location_on),
                     'กรอกที่อยู่',
                     TextInputType.streetAddress,
                     addressCtrl),
-                formField('วันนัดส่งมอบของ', 'กรุณาใส่วันนัดส่งมอบของ',
-                    'วัน/เดือน/ปี', TextInputType.datetime, dateCtrl),
+                GestureDetector(
+                  onTap: () => _selectDate(context),
+                  child: AbsorbPointer(
+                    child: Column(children: [
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('วันนัดส่งมอบของ'),
+                      ),
+                      TextFormField(
+                        controller: TextEditingController(
+                            text:
+                                '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
+                        decoration: InputDecoration(
+                          suffixIcon: const Icon(Icons.calendar_month),
+                          // const Icon(Icons.abc),
+                          hintText: 'วัน/เดือน/ปี',
+                          hintStyle: Theme.of(context).textTheme.bodyMedium,
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/main', (Route<dynamic> route) => false);
+                      callDialog(context,
+                          "โปรดตรวจสอบข้อมูลของท่าน\nไม่สามารถยกเลิกได้ในภายหลัง");
+                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                      //     '/main', (Route<dynamic> route) => false);
                     }
                   },
                   child: const Text(
