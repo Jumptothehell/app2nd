@@ -1,5 +1,6 @@
 import 'package:app2nd/src/screen/accountPage/accountpage.dart';
 import 'package:app2nd/src/screen/history.dart';
+import 'package:app2nd/src/screen/inprogress.dart';
 import 'package:app2nd/src/screen/mainhome.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +13,9 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _selectIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOption = <Widget>[
     MainHomePage(),
-    Text(
-      'Index 1: กำลังดำเนินการ',
-      style: optionStyle,
-    ),
+    InProgressScreen(),
     HistoryScreen(),
     AccountScreen()
   ];
