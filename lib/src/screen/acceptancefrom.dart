@@ -31,6 +31,8 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+        dateCtrl.text =
+            '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}';
       });
     }
   }
@@ -150,19 +152,52 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
                     TextInputType.text,
                     objCtrl),
                 formField(
-                    'สถานที่ส่งมอบของ',
+                    'รูปสิ่งของที่ต้องการบริจาค',
                     'กรุณาใส่รูป',
                     const Icon(Icons.photo_size_select_actual_rounded),
                     'แนบไฟล์',
                     TextInputType.text,
                     picCtrl),
-                formField(
-                    'รูปสิ่งของที่ต้องการบริจาค',
-                    'กรุณากรอกสถานที่ส่งมอบของ',
-                    const Icon(Icons.location_on),
-                    'กรอกที่อยู่',
-                    TextInputType.streetAddress,
-                    addressCtrl),
+                // AbsorbPointer(
+                //   child: formField(
+                //       'รูปสิ่งของที่ต้องการบริจาค',
+                //       'กรุณากรอกสถานที่ส่งมอบของ',
+                //       const IconButton(Icons.location_on),
+                //       'กรอกที่อยู่',
+                //       TextInputType.streetAddress,
+                //       addressCtrl),
+                // ),
+                GestureDetector(
+                  child: Column(children: [
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('สถานที่ส่งมอบของ'),
+                    ),
+                    TextFormField(
+                      controller: addressCtrl,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "กรุณากรอกสถานที่ส่งมอบของ";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            onPressed: () => print('click'),
+                            icon: const Icon(Icons.location_on)),
+                        hintText: 'กรอกที่อยู่',
+                        hintStyle: Theme.of(context).textTheme.bodyMedium,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0),
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                      ),
+                    ),
+                  ]),
+                ),
                 GestureDetector(
                   onTap: () => _selectDate(context),
                   child: AbsorbPointer(
@@ -172,12 +207,9 @@ class _AcceptanceFormState extends State<AcceptanceForm> {
                         child: Text('วันนัดส่งมอบของ'),
                       ),
                       TextFormField(
-                        controller: TextEditingController(
-                            text:
-                                '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
+                        controller: dateCtrl,
                         decoration: InputDecoration(
                           suffixIcon: const Icon(Icons.calendar_month),
-                          // const Icon(Icons.abc),
                           hintText: 'วัน/เดือน/ปี',
                           hintStyle: Theme.of(context).textTheme.bodyMedium,
                           border: const OutlineInputBorder(

@@ -43,6 +43,7 @@ class MainApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           titleMedium: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          titleSmall: TextStyle(fontWeight: FontWeight.w200, fontSize: 18),
           bodyMedium: TextStyle(fontSize: 16),
         ),
         //Button Theme
