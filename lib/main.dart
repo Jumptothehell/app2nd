@@ -4,6 +4,7 @@ import 'package:app2nd/src/screen/acceptancefrom.dart';
 import 'package:app2nd/src/screen/accountPage/contact.dart';
 import 'package:app2nd/src/screen/accountPage/editprofile.dart';
 import 'package:app2nd/src/screen/accountPage/faq.dart';
+import 'package:app2nd/src/screen/admissiondetail.dart';
 import 'package:app2nd/src/screen/forget_password/fp_1.dart';
 import 'package:app2nd/src/screen/forget_password/fp_2.dart';
 import 'package:app2nd/src/screen/forget_password/fp_3.dart';
@@ -73,6 +74,7 @@ class MainApp extends StatelessWidget {
         '/faq': (context) => const FaqScreen(),
         '/project': (context) => const ProjectDetailScreen(),
         '/accept': (context) => const AcceptanceForm(),
+        '/admission': (context) => const AdmissionDetailScreen()
       },
     );
   }
